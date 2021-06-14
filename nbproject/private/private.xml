@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/projet-upload/src/Entity/User.php</file>
-            <file>file:/C:/wamp64/www/projet-upload/src/Entity/Group.php</file>
-            <file>file:/C:/wamp64/www/projet-upload/config/packages/nucleos_user.yml</file>
+            <file>file:/C:/wamp64/www/projet-upload/src/Entity/Product.php</file>
+            <file>file:/C:/wamp64/www/projet-upload/config/packages/vich_uploader.yml</file>
+            <file>file:/C:/wamp64/www/projet-upload/config/services.yaml</file>
         </group>
     </open-files>
 </project-private>

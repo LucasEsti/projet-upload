@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     mailer_user: lie.lucas.razafindrambo@esti.mg
+    app.path.product_images: /uploads/images/products
+    brochures_directory: '%kernel.project_dir%/public/uploads/brochures'
 
 services:
     # default configuration for services in *this* file
@@ -36,3 +38,7 @@ services:
         arguments: ['@router']
         tags:
             - { name: kernel.event_subscriber }
+    
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%brochures_directory%'
