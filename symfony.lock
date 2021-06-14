@@ -106,6 +106,15 @@
     "nikic/php-parser": {
         "version": "v4.10.5"
     },
+    "nucleos/user-bundle": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.1",
+            "ref": "88cca294afe46854e805316dbcde52696c661ce6"
+        }
+    },
     "phar-io/manifest": {
         "version": "2.0.1"
     },
