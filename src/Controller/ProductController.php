@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Form\ProductType2;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,6 +62,36 @@ class ProductController extends AbstractController
                 $product->setFileExtra($fileExtraName);
             }
 
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('product_index');
+        }
+
+        return $this->render('product/new.html.twig', [
+            'product' => $product,
+            'form' => $form->createView(),
+        ]);
+    }
+    
+    /**
+     * @Route("/newFile", name="product_new_file", methods={"GET","POST"})
+     */
+    public function newFile(Request $request, FileUploader $fileUploader): Response
+    {
+        $product = new Product();
+        $form = $this->createForm(ProductType2::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $brochureFile */
+            $brochureFile = $form->get('brochure')->getData();
+            
+            if ($brochureFile) {
+                $brochureFileName = $fileUploader->upload($brochureFile);
+                $product->setBrochureFilename($brochureFileName);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();

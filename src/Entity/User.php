@@ -46,6 +46,11 @@ class User extends BaseUser
      */
     private $subscriptions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Folder::class, mappedBy="user")
+     */
+    private $folders;
+
     
 
     public function __construct()
@@ -53,9 +58,9 @@ class User extends BaseUser
         parent::__construct();
         // your own logic
         $this->groups = new ArrayCollection();
-        $this->$products = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
+        $this->folders = new ArrayCollection();
     }
 
     public function getDownCompt(): ?int
@@ -130,6 +135,36 @@ class User extends BaseUser
             // set the owning side to null (unless already changed)
             if ($subscription->getUser() === $this) {
                 $subscription->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Folder[]
+     */
+    public function getFolders(): Collection
+    {
+        return $this->folders;
+    }
+
+    public function addFolder(Folder $folder): self
+    {
+        if (!$this->folders->contains($folder)) {
+            $this->folders[] = $folder;
+            $folder->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFolder(Folder $folder): self
+    {
+        if ($this->folders->removeElement($folder)) {
+            // set the owning side to null (unless already changed)
+            if ($folder->getUser() === $this) {
+                $folder->setUser(null);
             }
         }
 

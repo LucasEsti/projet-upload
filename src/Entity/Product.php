@@ -64,6 +64,11 @@ class Product
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Folder::class, inversedBy="products")
+     */
+    private $folder;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -157,6 +162,18 @@ class Product
         if ($this->categories->removeElement($category)) {
             $category->removeProduct($this);
         }
+
+        return $this;
+    }
+
+    public function getFolder(): ?Folder
+    {
+        return $this->folder;
+    }
+
+    public function setFolder(?Folder $folder): self
+    {
+        $this->folder = $folder;
 
         return $this;
     }
