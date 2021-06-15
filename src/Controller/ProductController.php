@@ -41,24 +41,28 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $brochureFile */
             $brochureFile = $form->get('brochure')->getData();
-
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
+            
+            $imageOriginal = $form->get('imageOriginal')->getData();
+            
+            $fileExtra = $form->get('fileExtra')->getData();
+            
             if ($brochureFile) {
                 $brochureFileName = $fileUploader->upload($brochureFile);
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
                 $product->setBrochureFilename($brochureFileName);
             }
+            
+            if ($imageOriginal) {
+                $imageOriginalName = $fileUploader->upload($imageOriginal);
+                $product->setImageOriginal($imageOriginalName);
+            }
+            
+            if ($fileExtra) {
+                $fileExtraName = $fileUploader->upload($fileExtra);
+                $product->setFileExtra($fileExtraName);
+            }
 
-            // ... persist the $product variable or any other work
             $entityManager = $this->getDoctrine()->getManager();
-
-            // tell Doctrine you want to (eventually) save the Product (no queries yet)
             $entityManager->persist($product);
-
-            // actually executes the queries (i.e. the INSERT query)
             $entityManager->flush();
 
             return $this->redirectToRoute('product_index');
