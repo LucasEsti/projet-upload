@@ -14,8 +14,6 @@ class FolderType extends AbstractType
     {
         $builder
                 ->add('libelle')
-            ->add('user')
-            ->add('folder')
         ;
     }
 

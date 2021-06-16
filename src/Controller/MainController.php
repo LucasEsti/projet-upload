@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Folder;
+use App\Entity\User;
 use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +18,15 @@ class MainController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        
+        $currentFolder = 1;
+        
         $repositoryProduct = $this->getDoctrine()->getRepository(Folder::class);
-        $folders = $repositoryProduct->findBy(['folder' => 1]);
+        $folders = $repositoryProduct->findBy(['folder' => $currentFolder]);
         //show product in
         $repositoryProduct = $this->getDoctrine()->getRepository(Product::class);
-        $products = $repositoryProduct->findBy(['folder' => 1]);
+        $products = $repositoryProduct->findBy(['folder' => $currentFolder]);
         $donnees = array_merge($folders, $products);
         
         $datas = $paginator->paginate(
@@ -32,7 +37,8 @@ class MainController extends AbstractController
         
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
-            'datas' => $datas
+            'datas' => $datas,
+            'currentFolder' => $currentFolder
         ]);
     }
 }

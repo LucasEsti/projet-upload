@@ -11,7 +11,7 @@
                 
             
                 <div class="col-6">
-                    <a href="#" class="btn btn-success btn-icon-split">
+                    <a href="{{ path('folder_new', {'id': currentFolder}) }}" class="btn btn-success btn-icon-split">
                         <span class="icon text-white-50">
                             <i class="fas fa-folder-plus"></i>
                         </span>
@@ -31,71 +31,71 @@
     </div>
 
     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th>{{ knp_pagination_render(datas) }}</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        {% for data in datas %}
-                                            <tr>
-                                                <td>1</td>
-                                                <td>
-                                                      {% if data.libelle is defined  %}
-                                                          {{ data.libelle }}
-                                                      {% endif %}
-                                                      {% if data.brochureFilename is defined %}
-                                                          {{ data.brochureFilename }}
-                                                      {% endif %}
-                                                </td>
-                                                <td>
-                                                    {% if data.brochureFilename is defined %}
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <a href="{{ asset('uploads/brochures/' ~ data.brochureFilename) }}" class="btn btn-success btn-circle btn-lg">
-                                                                    <i class="fas fa-download"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <a href="{{ path('product_edit_file', {'id': data.id}) }}" class="btn btn-info btn-circle btn-lg">
-                                                                    <i class="fas fa-upload"></i>
-                                                                </a>
-                                                            </div>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>{{ knp_pagination_render(datas) }}</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for data in datas %}
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                      {% if data.libelle is defined  %}
+                                          {{ data.libelle }}
+                                      {% endif %}
+                                      {% if data.brochureFilename is defined %}
+                                          {{ data.brochureFilename }}
+                                      {% endif %}
+                                </td>
+                                <td>
+                                    {% if data.brochureFilename is defined %}
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <a href="{{ asset('uploads/brochures/' ~ data.brochureFilename) }}" class="btn btn-success btn-circle btn-lg">
+                                                    <i class="fas fa-download"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-4">
+                                                <a href="{{ path('product_edit_file', {'id': data.id}) }}" class="btn btn-info btn-circle btn-lg">
+                                                    <i class="fas fa-upload"></i>
+                                                </a>
+                                            </div>
 
-                                                            <div class="col-4">
-                                                                <form method="post" action="{{ path('product_delete', {'id': data.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ data.id) }}">
-                                                                    <button class="btn btn-danger btn-circle btn-lg"><i class="fas fa-trash"></i></button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
+                                            <div class="col-4">
+                                                <form method="post" action="{{ path('product_delete', {'id': data.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ data.id) }}">
+                                                    <button class="btn btn-danger btn-circle btn-lg"><i class="fas fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
 
 
 
-                                                    {% endif %} 
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                                    {% endif %} 
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
    
     
 {% endblock %}

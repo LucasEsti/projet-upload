@@ -32,6 +32,19 @@ class FolderController extends AbstractController
     public function new(Request $request): Response
     {
         $folder = new Folder();
+        
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if ($user instanceof User) {
+            $folder->setUser($user);
+
+        }
+        
+        //folder 
+        $id = $request->query->get('id');
+        if (!$id) {
+           $id = 1; 
+        } 
+        
         $form = $this->createForm(FolderType::class, $folder);
         $form->handleRequest($request);
 

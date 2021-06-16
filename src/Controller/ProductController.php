@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\User;
 use App\Form\ProductType;
 use App\Form\ProductType2;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,6 +37,14 @@ class ProductController extends AbstractController
     public function new(Request $request, FileUploader $fileUploader): Response
     {
         $product = new Product();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if ($user instanceof User) {
+            $product->setUser($user);
+
+        }
+        
+        
+        
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -61,7 +70,7 @@ class ProductController extends AbstractController
                 $fileExtraName = $fileUploader->upload($fileExtra);
                 $product->setFileExtra($fileExtraName);
             }
-
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
