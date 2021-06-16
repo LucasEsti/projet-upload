@@ -134,6 +134,26 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
+    /**
+     * @Route("/{id}/edit_file", name="product_edit_file", methods={"GET","POST"})
+     */
+    public function editFile(Request $request, Product $product): Response
+    {
+        $form = $this->createForm(ProductType2::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('product_index');
+        }
+
+        return $this->render('product/edit.html.twig', [
+            'product' => $product,
+            'form' => $form->createView(),
+        ]);
+    }
 
     /**
      * @Route("/{id}", name="product_delete", methods={"POST"})

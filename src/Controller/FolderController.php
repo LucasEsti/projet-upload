@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Folder;
+use App\Entity\Product;
 use App\Form\FolderType;
 use App\Repository\FolderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,9 +54,9 @@ class FolderController extends AbstractController
      */
     public function show(Folder $folder): Response
     {
-        //get 
+        
         return $this->render('folder/show.html.twig', [
-            'folder' => $folder,
+            'folder' => $folder
         ]);
     }
 
