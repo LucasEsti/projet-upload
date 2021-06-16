@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Folder;
+use App\Entity\Categorie;
 use Nucleos\UserBundle\Model\UserManagerInterface;
 
 class AppFixtures extends Fixture
@@ -19,17 +20,26 @@ class AppFixtures extends Fixture
     
     public function load(ObjectManager $manager)
     {
+        //user
         $user = $this->encoder->createUser();
         $user->setUsername('Lucas');
         $user->setEmail('lie.lucas.razafindrambo@esti.mg');
-        $user->setPassword('');
-
+        $user->setPassword('Lucas');
         $this->encoder->updateUser($user);
         
+        //folder
         $folder = new Folder();
         $folder->setLibelle("home");
         $folder->setUser($user);
         $manager->persist($folder);
+        
+        //categorie
+        $categorieLibelle = ["Antsy", "Fiara", "Akondro", "Fiara karetsaka", "Lamba", "Basy", "Very", "Masoandro"];
+        for ($i = 0; $i < count($categorieLibelle); $i++) {
+            $categorie = new Categorie();
+            $categorie->setLibelle($categorieLibelle[$i]);
+            $manager->persist($categorie);
+        }
 
         $manager->flush();
     }

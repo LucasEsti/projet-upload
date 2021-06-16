@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProductType extends AbstractType
 {
@@ -46,6 +47,7 @@ class ProductType extends AbstractType
                 // every time you edit the Product details
                 'required' => false,
             ])
+            ->add('categorie')
             
         ;
     }

@@ -25,9 +25,10 @@ class Categorie
     private $libelle;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="categorie")
      */
     private $products;
+
 
     public function __construct()
     {
@@ -51,6 +52,11 @@ class Categorie
         return $this;
     }
 
+    
+    public function __toString() {
+        return $this->libelle;
+    }
+
     /**
      * @return Collection|Product[]
      */
@@ -63,6 +69,7 @@ class Categorie
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
+            $product->addCategorie($this);
         }
 
         return $this;
@@ -70,7 +77,9 @@ class Categorie
 
     public function removeProduct(Product $product): self
     {
-        $this->products->removeElement($product);
+        if ($this->products->removeElement($product)) {
+            $product->removeCategorie($this);
+        }
 
         return $this;
     }

@@ -59,19 +59,20 @@ class Product
      */
     private $user;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Categorie::class, mappedBy="products")
-     */
-    private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity=Folder::class, inversedBy="products")
      */
     private $folder;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Categorie::class, inversedBy="products")
+     */
+    private $categorie;
+
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->categorie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,32 +140,6 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection|Categorie[]
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Categorie $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Categorie $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removeProduct($this);
-        }
-
-        return $this;
-    }
 
     public function getFolder(): ?Folder
     {
@@ -177,4 +152,30 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @return Collection|Categorie[]
+     */
+    public function getCategorie(): Collection
+    {
+        return $this->categorie;
+    }
+
+    public function addCategorie(Categorie $categorie): self
+    {
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie[] = $categorie;
+        }
+
+        return $this;
+    }
+
+    public function removeCategorie(Categorie $categorie): self
+    {
+        $this->categorie->removeElement($categorie);
+
+        return $this;
+    }
+    
+    
 }

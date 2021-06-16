@@ -43,8 +43,6 @@ class ProductController extends AbstractController
 
         }
         
-        
-        
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -70,7 +68,6 @@ class ProductController extends AbstractController
                 $fileExtraName = $fileUploader->upload($fileExtra);
                 $product->setFileExtra($fileExtraName);
             }
-            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
