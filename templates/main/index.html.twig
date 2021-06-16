@@ -57,7 +57,9 @@
                                 <td>1</td>
                                 <td>
                                       {% if data.libelle is defined  %}
-                                          {{ data.libelle }}
+                                            <a href="{{ path('main', {'id': data.id}) }}">
+                                                {{ data.libelle }}
+                                            </a>
                                       {% endif %}
                                       {% if data.brochureFilename is defined %}
                                           {{ data.brochureFilename }}

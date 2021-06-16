@@ -19,11 +19,14 @@ class MainController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        
+        $id = $request->query->get('id');
         $currentFolder = 1;
+        if ($id) {
+            $currentFolder = $id;
+        }
         
-        $repositoryProduct = $this->getDoctrine()->getRepository(Folder::class);
-        $folders = $repositoryProduct->findBy(['folder' => $currentFolder]);
+        $repositoryFolder = $this->getDoctrine()->getRepository(Folder::class);
+        $folders = $repositoryFolder->findBy(['folder' => $currentFolder]);
         //show product in
         $repositoryProduct = $this->getDoctrine()->getRepository(Product::class);
         $products = $repositoryProduct->findBy(['folder' => $currentFolder]);

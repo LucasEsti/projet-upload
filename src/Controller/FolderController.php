@@ -43,7 +43,13 @@ class FolderController extends AbstractController
         $id = $request->query->get('id');
         if (!$id) {
            $id = 1; 
-        } 
+        }
+        
+        $repositoryFolder = $this->getDoctrine()->getRepository(Folder::class);
+        $currentFolder = $repositoryFolder->find($id);
+        
+        
+        $folder->setFolder($currentFolder);
         
         $form = $this->createForm(FolderType::class, $folder);
         $form->handleRequest($request);
@@ -53,7 +59,7 @@ class FolderController extends AbstractController
             $entityManager->persist($folder);
             $entityManager->flush();
 
-            return $this->redirectToRoute('folder_index');
+            return $this->redirectToRoute('main', ['id' => $id]);
         }
 
         return $this->render('folder/new.html.twig', [
