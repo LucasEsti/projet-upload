@@ -1,2 +1,10 @@
 nucleos_user:
     resource: "@NucleosUserBundle/Resources/config/routing/all.xml"
+    
+nucleos_user_resetting:
+    resource: "@NucleosUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+nucleos_user_change_password:
+    resource: "@NucleosUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /security
