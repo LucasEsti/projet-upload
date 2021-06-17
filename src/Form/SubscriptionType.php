@@ -12,9 +12,6 @@ class SubscriptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('status')
-            ->add('dateDebut')
-            ->add('dateFin')
             ->add('user')
         ;
     }

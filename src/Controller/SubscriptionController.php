@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\SubscriptionStatus;
 
 /**
  * @Route("/subscription")
@@ -35,6 +36,17 @@ class SubscriptionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //user
+            $dateDebut = new \DateTime();
+            $dateFin = $dateDebut->add(new \DateInterval('P30D'));
+            $subscription->setDateFin($dateFin);
+            
+            $repositoryStatus = $this->getDoctrine()->getRepository(SubscriptionStatus::class);
+        
+            $status = $repositoryStatus->findOneBy(['libelle' => 'Active']);
+            $subscription->setStatus($status);
+            
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($subscription);
             $entityManager->flush();

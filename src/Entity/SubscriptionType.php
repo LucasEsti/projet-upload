@@ -21,6 +21,10 @@ class SubscriptionType
      * @ORM\Column(type="string", length=255)
      */
     private $libelle;
+    
+    public function __toString() {
+        return $this->libelle;
+    }
 
     public function getId(): ?int
     {

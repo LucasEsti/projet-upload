@@ -28,6 +28,10 @@ class SubscriptionStatus
      * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="status")
      */
     private $subscriptions;
+    
+    public function __toString() {
+        return $this->libelle;
+    }
 
     public function __construct()
     {

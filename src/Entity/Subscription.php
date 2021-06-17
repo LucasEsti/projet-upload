@@ -41,6 +41,9 @@ class Subscription
     public function __construct()
     {
         //tonga de asina ny dateDebut
+        $this->dateDebut = new \DateTime();
+        
+        
     }
 
     public function getId(): ?int

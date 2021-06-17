@@ -20,15 +20,15 @@ class SubscriptionRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Subscription[] Returns an array of Subscription objects
+    //  * @return Categorie[] Returns an array of Categorie objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
+            ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -37,10 +37,10 @@ class SubscriptionRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Subscription
+    public function findOneBySomeField($value): ?Categorie
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
