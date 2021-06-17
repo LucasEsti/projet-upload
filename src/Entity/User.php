@@ -51,6 +51,11 @@ class User extends BaseUser
      */
     private $folders;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserDownload::class, mappedBy="user")
+     */
+    private $userDownloads;
+
     
 
     public function __construct()
@@ -61,6 +66,7 @@ class User extends BaseUser
         $this->products = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->folders = new ArrayCollection();
+        $this->userDownloads = new ArrayCollection();
     }
 
     public function getDownCompt(): ?int
@@ -165,6 +171,36 @@ class User extends BaseUser
             // set the owning side to null (unless already changed)
             if ($folder->getUser() === $this) {
                 $folder->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserDownload[]
+     */
+    public function getUserDownloads(): Collection
+    {
+        return $this->userDownloads;
+    }
+
+    public function addUserDownload(UserDownload $userDownload): self
+    {
+        if (!$this->userDownloads->contains($userDownload)) {
+            $this->userDownloads[] = $userDownload;
+            $userDownload->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserDownload(UserDownload $userDownload): self
+    {
+        if ($this->userDownloads->removeElement($userDownload)) {
+            // set the owning side to null (unless already changed)
+            if ($userDownload->getUser() === $this) {
+                $userDownload->setUser(null);
             }
         }
 

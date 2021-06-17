@@ -70,9 +70,20 @@ class Product
      */
     private $categorie;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserDownload::class, mappedBy="product")
+     */
+    private $userDownloads;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $libelle;
+
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
+        $this->userDownloads = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -173,6 +184,48 @@ class Product
     public function removeCategorie(Categorie $categorie): self
     {
         $this->categorie->removeElement($categorie);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserDownload[]
+     */
+    public function getUserDownloads(): Collection
+    {
+        return $this->userDownloads;
+    }
+
+    public function addUserDownload(UserDownload $userDownload): self
+    {
+        if (!$this->userDownloads->contains($userDownload)) {
+            $this->userDownloads[] = $userDownload;
+            $userDownload->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserDownload(UserDownload $userDownload): self
+    {
+        if ($this->userDownloads->removeElement($userDownload)) {
+            // set the owning side to null (unless already changed)
+            if ($userDownload->getProduct() === $this) {
+                $userDownload->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
 
         return $this;
     }

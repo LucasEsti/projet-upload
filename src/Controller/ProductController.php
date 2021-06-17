@@ -58,6 +58,7 @@ class ProductController extends AbstractController
             if ($brochureFile) {
                 $brochureFileName = $fileUploader->upload($brochureFile);
                 $product->setBrochureFilename($brochureFileName);
+                $product->setLibelle($brochureFileName);
             }
             
             if ($imageOriginal) {
@@ -113,7 +114,9 @@ class ProductController extends AbstractController
             if ($brochureFile) {
                 $brochureFileName = $fileUploader->upload($brochureFile);
                 $product->setBrochureFilename($brochureFileName);
+                $product->setLibelle($brochureFileName);
             }
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();

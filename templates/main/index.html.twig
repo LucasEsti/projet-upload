@@ -32,7 +32,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ folder }}</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -55,38 +55,37 @@
                         {% for data in datas %}
                             <tr>
                                 <td class="col-1">
-                                    {% if data.libelle is defined  %}
+                                    {% if data.brochureFilename is defined %}
+                                        <div class="text-center">
+                                            <i class="fas fa-file"></i>
+                                        </div>
+                                    {% else %}
                                         <div class="text-center">
                                             <i class="fas fa-folder"></i>
                                         </div>
                                     {% endif %}
                                       
-                                    {% if data.brochureFilename is defined %}
-                                        <div class="text-center">
-                                            <i class="fas fa-file"></i>
-                                        </div>
-                                    {% endif %}
+                                    
                                 </td>
                                 <td>
-                                      {% if data.libelle is defined  %}
-                                            <a href="{{ path('main', {'id': data.id}) }}">
-                                                {{ data.libelle }}
-                                            </a>
-                                      {% endif %}
-                                      {% if data.brochureFilename is defined %}
-                                          {{ data.brochureFilename }}
-                                      {% endif %}
+                                    {% if data.brochureFilename is defined %}
+                                        {{ data.libelle }}
+                                    {% else %}
+                                        <a href="{{ path('main', {'id': data.id}) }}">
+                                            {{ data.libelle }}
+                                        </a>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     {% if data.brochureFilename is defined %}
                                         <div class="row">
                                             <div class="col-4">
-                                                <a href="{{ asset('uploads/brochures/' ~ data.brochureFilename) }}" class="btn btn-success btn-circle btn-lg">
+                                                <a href="{{ asset('uploads/brochures/' ~ data.brochureFilename) }}" class="btn btn-success btn-circle" download>
                                                     <i class="fas fa-download"></i>
                                                 </a>
                                             </div>
                                             <div class="col-4">
-                                                <a href="{{ path('product_edit_file', {'id': data.id}) }}" class="btn btn-info btn-circle btn-lg">
+                                                <a href="{{ path('product_edit_file', {'id': data.id}) }}" class="btn btn-info btn-circle">
                                                     <i class="fas fa-upload"></i>
                                                 </a>
                                             </div>
@@ -94,7 +93,7 @@
                                             <div class="col-4">
                                                 <form method="post" action="{{ path('product_delete', {'id': data.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ data.id) }}">
-                                                    <button class="btn btn-danger btn-circle btn-lg"><i class="fas fa-trash"></i></button>
+                                                    <button class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></button>
                                                 </form>
                                             </div>
                                         </div>

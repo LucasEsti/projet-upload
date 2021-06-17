@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Folder;
+use App\Entity\SubscriptionType;
 use App\Entity\Categorie;
 use Nucleos\UserBundle\Model\UserManagerInterface;
 
@@ -39,6 +40,15 @@ class AppFixtures extends Fixture
             $categorie = new Categorie();
             $categorie->setLibelle($categorieLibelle[$i]);
             $manager->persist($categorie);
+        }
+        
+        //SubscriptionType
+        $subscriptionTypes = ["Mensuel", "Credit", "annuel"];
+        
+        for ($i = 0; $i < count($subscriptionTypes); $i++) {
+            $subscriptionType = new SubscriptionType();
+            $subscriptionType->setLibelle($subscriptionTypes[$i]);
+            $manager->persist($subscriptionType);
         }
 
         $manager->flush();

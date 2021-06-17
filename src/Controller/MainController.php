@@ -26,6 +26,10 @@ class MainController extends AbstractController
         }
         
         $repositoryFolder = $this->getDoctrine()->getRepository(Folder::class);
+        
+        $folder = $repositoryFolder->find($currentFolder);
+        
+        
         $folders = $repositoryFolder->findBy(['folder' => $currentFolder]);
         //show product in
         $repositoryProduct = $this->getDoctrine()->getRepository(Product::class);
@@ -41,6 +45,7 @@ class MainController extends AbstractController
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
             'datas' => $datas,
+            'folder' => $folder,
             'currentFolder' => $currentFolder
         ]);
     }
