@@ -17,10 +17,6 @@ class Subscription
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $status;
 
     /**
      * @ORM\Column(type="date")
@@ -36,6 +32,11 @@ class Subscription
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="subscriptions")
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=SubscriptionStatus::class, inversedBy="subscriptions")
+     */
+    private $status;
     
     public function __construct()
     {
@@ -47,17 +48,6 @@ class Subscription
         return $this->id;
     }
 
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
 
     public function getDateDebut(): ?\DateTimeInterface
     {
@@ -91,6 +81,18 @@ class Subscription
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getStatus(): ?SubscriptionStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?SubscriptionStatus $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

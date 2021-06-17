@@ -6,6 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Folder;
 use App\Entity\SubscriptionType;
+use App\Entity\SubscriptionStatus;
 use App\Entity\Categorie;
 use Nucleos\UserBundle\Model\UserManagerInterface;
 
@@ -43,12 +44,21 @@ class AppFixtures extends Fixture
         }
         
         //SubscriptionType
-        $subscriptionTypes = ["Mensuel", "Credit", "annuel"];
+        $subscriptionTypes = ["Mensuel", "Credit", "Annuel"];
         
         for ($i = 0; $i < count($subscriptionTypes); $i++) {
             $subscriptionType = new SubscriptionType();
             $subscriptionType->setLibelle($subscriptionTypes[$i]);
             $manager->persist($subscriptionType);
+        }
+        
+        //SubscriptionType
+        $subscriptionStatus = ["Active", "Inactive"];
+        
+        for ($i = 0; $i < count($subscriptionStatus); $i++) {
+            $subscriptionState = new SubscriptionStatus();
+            $subscriptionState->setLibelle($subscriptionStatus[$i]);
+            $manager->persist($subscriptionState);
         }
 
         $manager->flush();
