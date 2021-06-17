@@ -26,18 +26,6 @@ class ProductType2 extends AbstractType
                 // every time you edit the Product details
                 'required' => false,
             ])
-            ->add('user', EntityType::class, [
-                // looks for choices from this entity
-                'class' => User::class,
-
-                // uses the User.username property as the visible option string
-                'choice_label' => 'username',
-
-                // used to render a select box, check boxes or radios
-                // 'multiple' => true,
-                // 'expanded' => true,
-            ])
-            ->add('folder')
         ;
     }
 

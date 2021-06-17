@@ -15,15 +15,15 @@
                         <span class="icon text-white-50">
                             <i class="fas fa-folder-plus"></i>
                         </span>
-                        <span class="text">Split Button Success</span>
+                        <span class="text">add new folder</span>
                     </a>
                 </div>
                 <div class="col-6">
-                    <a href="#" class="btn btn-info btn-icon-split">
+                    <a href="{{ path('product_new_file', {'id': currentFolder}) }}" class="btn btn-info btn-icon-split">
                         <span class="icon text-white-50">
                             <i class="fas fa-file-plus"></i>
                         </span>
-                        <span class="text">Split Button Info</span>
+                        <span class="text">add new file</span>
                     </a>
                 </div>
             </div>
@@ -54,7 +54,19 @@
                     <tbody>
                         {% for data in datas %}
                             <tr>
-                                <td>1</td>
+                                <td class="col-1">
+                                    {% if data.libelle is defined  %}
+                                        <div class="text-center">
+                                            <i class="fas fa-folder"></i>
+                                        </div>
+                                    {% endif %}
+                                      
+                                    {% if data.brochureFilename is defined %}
+                                        <div class="text-center">
+                                            <i class="fas fa-file"></i>
+                                        </div>
+                                    {% endif %}
+                                </td>
                                 <td>
                                       {% if data.libelle is defined  %}
                                             <a href="{{ path('main', {'id': data.id}) }}">

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Folder;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Form\ProductType;
@@ -86,7 +87,22 @@ class ProductController extends AbstractController
      */
     public function newFile(Request $request, FileUploader $fileUploader): Response
     {
+        $id = $request->query->get('id');
+        if (!$id) {
+           $id = 1; 
+        }
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        
+        
+        $repositoryFolder = $this->getDoctrine()->getRepository(Folder::class);
+        $currentFolder = $repositoryFolder->find($id);
+        
         $product = new Product();
+        $product->setFolder($currentFolder);
+        if ($user instanceof User) {
+            $product->setUser($user);
+
+        }
         $form = $this->createForm(ProductType2::class, $product);
         $form->handleRequest($request);
 
