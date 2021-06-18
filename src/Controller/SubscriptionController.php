@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Subscription;
 use App\Form\SubscriptionType;
 use App\Repository\SubscriptionRepository;
@@ -45,9 +46,22 @@ class SubscriptionController extends AbstractController
         
             $status = $repositoryStatus->findOneBy(['libelle' => 'Active']);
             $subscription->setStatus($status);
-            
-            
+            $downUser = 30;
+            //user
             $entityManager = $this->getDoctrine()->getManager();
+            $user = $this->container->get('security.token_storage')->getToken()->getUser();
+            
+            if ($user instanceof User) {
+                $subscription->setUser($user);
+                //asina down incrementena le teo donc ampina ny solde
+                $down = $user->getDownCompt();
+                if ($down == null) {
+                    $down = 0;
+                }
+                $user->setDownCompt($downUser + $down);
+                $entityManager->persist($user);
+            }
+            
             $entityManager->persist($subscription);
             $entityManager->flush();
 
