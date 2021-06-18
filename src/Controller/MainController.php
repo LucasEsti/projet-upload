@@ -29,7 +29,6 @@ class MainController extends AbstractController
         
         $folder = $repositoryFolder->find($currentFolder);
         
-        
         $folders = $repositoryFolder->findBy(['folder' => $currentFolder]);
         //show product in
         $repositoryProduct = $this->getDoctrine()->getRepository(Product::class);
